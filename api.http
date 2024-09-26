@@ -82,3 +82,8 @@ Content-Type: application/json
     "ReorderLevel": 20,
     "Discontinued": false 
 }
+
+###
+
+# Eliminar un producto
+DELETE http://localhost:3001/productos/81
