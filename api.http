@@ -1,2 +1,65 @@
+# Hola mundo
+GET http://localhost:3001/
+
+###
+
 # Obtener todos los productos
-GET 
+GET http://localhost:3001/productos
+
+###
+
+# Obtener todos los productos y categorias
+GET http://localhost:3001/productosycategorias
+
+###
+
+# Obtener un producto por nombre
+GET http://localhost:3001/productos/nombre/Chai
+
+###
+
+# Obtener un producto por nombre
+GET http://localhost:3001/productos/nombre/Steeleye Stout
+
+###
+
+# Obtener un producto por id
+GET http://localhost:3001/productos/5
+
+###
+
+# Obtener productos de una categoria
+GET http://localhost:3001/productos/categoria/2
+
+###
+
+# buscar productos de manera laxa
+GET http://localhost:3001/productos/buscar/Chef 
+
+###
+
+# buscar productos con importe mayor a 30
+GET http://localhost:3001/productos/importeMayor/30 
+
+###
+
+# Obtener todos los empleados
+GET http://localhost:3001/empleados
+
+###
+
+# Insertar un producto
+POST http://localhost:3001/productos
+Content-Type: application/json
+
+{
+    "ProductName": "Cajon de cerveza",
+    "SupplierID": 1,
+    "CategoryID": 1,
+    "QuantityPerUnit": "12 unidades",
+    "UnitPrice": 2500,
+    "UnitsInStock": 524,
+    "UnitsOnOrder": 10,
+    "ReorderLevel": 20,
+    "Discontinued": false 
+}

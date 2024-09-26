@@ -22,12 +22,12 @@ app.use(async (req, res, next) => {
 })
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.json('Hello World!')
 })
 
 app.get('/productosycategorias', async (req, res) => {
   try {
-    const products = await Product.findAll(
+    const products = await ProductCategoryView.findAll(
     )
     products.length > 0 ? res.status(200).json(products)
       : res.status(404).json({ error: "No encontramos productos cargados" })
@@ -144,7 +144,7 @@ app.post('/productos', async (req, res) => {
   try {
     // Tomamos todos los datos desde el body
     const {
-      productName,
+      ProductName,
       SupplierID,
       CategoryID,
       QuantityPerUnit,
@@ -156,7 +156,7 @@ app.post('/productos', async (req, res) => {
     } = req.body
     // Hacemos el INSERT mediante sequelize
     const product = await Product.create({
-      productName,
+      ProductName,
       SupplierID,
       CategoryID,
       QuantityPerUnit,

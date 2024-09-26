@@ -4,13 +4,13 @@ const { DataTypes } = require('sequelize')
 const Product = sequelize.define(
   'Product',
   {
-    productID: {
+    ProductID: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    productName: {
-      type: DataTypes.STRING,
+    ProductName: {
+      type: DataTypes.STRING(40),
       allowNull: false,
     },
     SupplierID: {
@@ -24,7 +24,7 @@ const Product = sequelize.define(
       default: 1,
     },
     QuantityPerUnit: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(20),
       allowNull: true,
       default: 'N/A',
     },

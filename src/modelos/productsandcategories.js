@@ -4,12 +4,12 @@ const { DataTypes } = require('sequelize')
 const ProductCategoryView = sequelize.define(
   'ProductCategoryView',
   {
-    productID: {
+    ProductID: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    productName: {
+    ProductName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -19,9 +19,9 @@ const ProductCategoryView = sequelize.define(
       default: 1,
     },
     CategoryName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     QuantityPerUnit: {
       type: DataTypes.STRING,
       allowNull: true,
