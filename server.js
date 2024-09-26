@@ -48,10 +48,10 @@ app.get('/productos', async (req, res) => {
   }
 })
 
-app.get('/productos/:productID', async (req, res) => {
+app.get('/productos/:ProductID', async (req, res) => {
   try {
-    const { productID } = req.params
-    const product = await Product.findByPk(productID)
+    const { ProductID } = req.params
+    const product = await Product.findByPk(ProductID)
     product ? res.json(product)
       : res.status(404).json({ error: "Producto no encontrado" })
   } catch (error) {
@@ -59,10 +59,10 @@ app.get('/productos/:productID', async (req, res) => {
   }
 })
 
-app.get('/productos/nombre/:productName', async (req, res) => {
+app.get('/productos/nombre/:ProductName', async (req, res) => {
   try {
-    const { productName } = req.params
-    const product = await Product.findOne({ where: { productName } })
+    const { ProductName } = req.params
+    const product = await Product.findOne({ where: { ProductName } })
     product ? res.json(product)
       : res.status(404).json({ error: "Producto no encontrado" })
   } catch (error) {
@@ -168,6 +168,48 @@ app.post('/productos', async (req, res) => {
     })
     // Devolvemos en la response el código 201 con el producto
     res.status(201).json(product)
+  } catch (error) {
+    res.status(500).json({ error: `Ocurrio un error`, message: `error: ${error.message}` })
+  }
+})
+
+app.put('/productos/:ProductID', async (req, res) => {
+  try {
+    // Tomamos el parametro
+    const { ProductID } = req.params
+    // Tomamos todos los datos desde el body
+    const {
+      ProductName,
+      SupplierID,
+      CategoryID,
+      QuantityPerUnit,
+      UnitPrice,
+      UnitsInStock,
+      UnitsOnOrder,
+      ReorderLevel,
+      Discontinued
+    } = req.body
+    // Hacemos el UPDATE mediante sequelize
+    const [productToUpdate] = await Product.update({
+      ProductName,
+      SupplierID,
+      CategoryID,
+      QuantityPerUnit,
+      UnitPrice,
+      UnitsInStock,
+      UnitsOnOrder,
+      ReorderLevel,
+      Discontinued
+    },
+      { where: { ProductID } }
+    )
+    if (productToUpdate === 0) {
+      res.status(404).json({ error: "Producto no encontrado" })
+    }
+
+    // Devolvemos en la response el código 201 con el producto
+    const product = await Product.findByPk(ProductID)
+    res.json(product)
   } catch (error) {
     res.status(500).json({ error: `Ocurrio un error`, message: `error: ${error.message}` })
   }
