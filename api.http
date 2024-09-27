@@ -87,3 +87,19 @@ Content-Type: application/json
 
 # Eliminar un producto
 DELETE http://localhost:3001/productos/81
+
+###
+
+# Obtener todos las categorias
+GET http://localhost:3001/categorias
+
+
+###
+
+# Obtener una categoria por id
+GET http://localhost:3001/categorias/7
+
+###
+
+# Eliminar una categoria por id
+DELETE http://localhost:3001/categorias/7

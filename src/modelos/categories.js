@@ -1,8 +1,8 @@
 const { sequelize } = require('../conexion/connection')
 const { DataTypes } = require('sequelize')
 
-const Categories = sequelize.define(
-    'Categories',
+const Category = sequelize.define(
+    'Category',
     {
         CategoryID: {
             type: DataTypes.INTEGER,
@@ -29,4 +29,4 @@ const Categories = sequelize.define(
     }
 )
 
-module.exports = { Categories }
+module.exports = { Category }

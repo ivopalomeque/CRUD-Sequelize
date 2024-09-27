@@ -1,7 +1,7 @@
 const { Product } = require('./src/modelos/product')
 const { Employee } = require('./src/modelos/employee')
 const { ProductCategoryView } = require('./src/modelos/productsandcategories')
-const { Categories } = require('./src/modelos/categories')
+const { Category } = require('./src/modelos/category')
 
 const { sequelize } = require('./src/conexion/connection')
 const { Op } = require('sequelize')
@@ -227,6 +227,50 @@ app.delete('/productos/:ProductID', async (req, res) => {
       return res.status(404).json({ error: "Producto no encontrado" })
     // Hacemos el delete mediante sequelize
     productToDelete.destroy()
+    // Devolvemos en la response el código 204 con mensaje vacio
+    res.status(204).send()
+  } catch (error) {
+    res.status(500).json({ error: `Ocurrio un error`, message: `error: ${error.message}` })
+  }
+})
+
+app.get('/categorias', async (req, res) => {
+  try {
+    const categorias = await Category.findAll()
+    categorias.length > 0 ? res.status(200).json(categorias)
+      : res.status(404).json({ error: "No encontramos categorias cargados" })
+  } catch (error) {
+    res.status(500).json({ error: `Error en el servidor: `, description: error.message })
+  }
+})
+
+app.get('/categorias/:CategoryID', async (req, res) => {
+  try {
+    const { CategoryID } = req.params
+    const category = await Category.findByPk(CategoryID)
+    category ? res.json(category)
+      : res.status(404).json({ error: "Categoría no encontrado" })
+  } catch (error) {
+    res.status(500).json({ error: `Error en el servidor: `, description: error.message })
+  }
+})
+
+app.delete('/categorias/:CategoryID', async (req, res) => {
+  try {
+    // Tomamos el parametro
+    const { CategoryID } = req.params
+    // Buscamos el categoría
+    const categoryToDelete = await Category.findByPk(CategoryID)
+    // Si no encontramos el categoría
+    if (!categoryToDelete)
+      return res.status(404).json({ error: "categoría no encontrada" })
+    // Buscamos si la categoría tiene un producto
+    const productsInCategory = await Product.findOne({ where: { CategoryID } })
+    // Si tiene al menos uno, entonces arrojamos 400
+    if (productsInCategory)
+      return res.status(400).json({ error: "No se pudo eliminar la categoría", message: "Existen productos asociados a la categoria" })
+    // Hacemos el delete mediante sequelize
+    categoryToDelete.destroy()
     // Devolvemos en la response el código 204 con mensaje vacio
     res.status(204).send()
   } catch (error) {
